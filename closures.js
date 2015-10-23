@@ -11,7 +11,11 @@ var outer = function(){
 
   //Code Here
 
+var inner = outer();
+
 //Once you do that, invoke inner.
+
+/*alert(inner());*/
 
   //Code Here
 
@@ -33,7 +37,8 @@ var callFriend = function(){
 //Do what you need to do in order to call your function and get 'Calling Jake at 435-215-9248' in your console.
 
   //Code Here
-
+var newCall = callFriend();
+/*alert(newCall('435-215-9248'));*/
 
 
 //Next Problem
@@ -44,12 +49,19 @@ var callFriend = function(){
   Write a function called makeCounter that makes the following code work properly.
 */
 
+  function makeCounter() {
+    var counter = 0;
+    return function() {
+      counter++;
+      alert(counter);
+    }
+  }
   //Code Here
-  var count = makeCounter();
+/*  var count = makeCounter();
   count() // 1
   count() // 2
   count() // 3
-  count() // 4
+  count() // 4*/
 
 
 
@@ -61,6 +73,17 @@ var callFriend = function(){
   Write a function that does something simple (console, alert, etc). Write a second function that accepts the first function as it's first parameter. The second function should return a new third function which, when invoked, invokes the first, original function that was passed in, but will only ever do so once.
 */
 
+  function simple() {
+    alert('john doe');
+  }
+
+  function notAsSimple(fn) {
+    return function() {
+      fn();
+    }
+  }
+
+/*  notAsSimple(simple)();*/
   //Code Here
 
 
@@ -73,6 +96,16 @@ var callFriend = function(){
   Now, similar to the last problem, write a function called 'fnCounter' that accepts two parameters. The first parameter will be an anonymous function and the second parameter, 'N', will be a number. Now, in 'fnCounter', allow the anonymous funciton to be invoked 'N' number of times. After it's been invoked 'N' number of times, return 'STOP'.
 */
 
+function fnCounter(fn, n) {
+  for (var i = 0; i < n; i++) {
+    fn();
+  }
+  return alert('STOP');
+}
+
+/*fnCounter(function(){
+  alert('hi');
+}, 3);*/
 
 
 //Next Problem
@@ -90,12 +123,17 @@ var callFriend = function(){
 
   Above you have a function named counter. Examine the function (without running the code) then below write what you expect to happen when the funciton is invoked. *Hint: setTimeout calls a function or evaluates an expression after a specified number of milliseconds.
 
+
+first, counter will be called and placed on the call stack.  then, the for loop runs and for each itteration, calls setTime out which is given a new execution context and place on the callstack for each itteration through the loop.  the callback function inside of setTimeOut will console.log the value of our iterator counter on each pass through.  the catch is that the time delay will increase by a multiplier of i on each itteration and invocation of the callback. 
+
     //Answer Here
 
 
   Now, run the function in your console and note what happpens.
 
   Was your answer right or wrong?
+  
+  yikes, forgot that since a new execution context is created for each call of setTimeOut, and not immeaditely invoked, the value of i will be referenced when the function is actually called.  the for loop will have already created all of these execution contexts before the first call is even made. Yes, js is fast...
 
     //Answer Here
 
@@ -104,6 +142,14 @@ var callFriend = function(){
 */
 
     //Code Here
+
+ /*var counter = function(){
+    for (var i=1; i<=5; i++) {
+      setTimeout( (function timer(){
+          console.log( i );
+      }()), i*1000 );
+    }
+  };*/
 
 
 
@@ -120,8 +166,36 @@ var callFriend = function(){
   funcArray[3]() //3
   funcArray[4]() //4
   funcArray[5]() //5
-
-  *Hint: Don't let this fool you. Break down what's really happening here.
 */
+
+
+  function buildArray() {
+    var newArr = [];
+    for (var i = 0; i < 6; i ++) {
+      newArr.push(
+        (function(j){
+          return function() {
+            console.log(j);
+          }
+          }(i)
+        ));
+    }
+    return newArr;
+  }
+  
+  var funcArray = buildArray();      
+  funcArray[0]();
+  funcArray[1]();
+  funcArray[2]();
+  funcArray[3]();
+  funcArray[4]();
+  funcArray[5]();
+      
+      
+      
+  
+
+  /**Hint: Don't let this fool you. Break down what's really happening here.*/
+
 
 
