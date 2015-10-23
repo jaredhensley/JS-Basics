@@ -56,6 +56,7 @@ var newCall = callFriend();
       alert(counter);
     }
   }
+
   //Code Here
 /*  var count = makeCounter();
   count() // 1
@@ -143,15 +144,25 @@ first, counter will be called and placed on the call stack.  then, the for loop 
 
     //Code Here
 
+ var counter = function(){
+   'use strict';
+    for (var i=1; i<=5; i++) {
+      let x = i;
+      setTimeout(function timer(){
+          console.log(x);
+      }, i*1000 );
+    }
+  };
+
+
  /*var counter = function(){
     for (var i=1; i<=5; i++) {
       setTimeout( (function timer(){
           console.log( i );
       }()), i*1000 );
     }
-  };*/
-
-
+  };
+*/
 
 //Next Problem
 
@@ -168,7 +179,7 @@ first, counter will be called and placed on the call stack.  then, the for loop 
   funcArray[5]() //5
 */
 
-
+/*
   function buildArray() {
     var newArr = [];
     for (var i = 0; i < 6; i ++) {
@@ -190,7 +201,7 @@ first, counter will be called and placed on the call stack.  then, the for loop 
   funcArray[3]();
   funcArray[4]();
   funcArray[5]();
-      
+      */
       
       
   
